@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: '*'
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+      routes:
+        - id: student-service
+          uri: lb://student-service
+          predicates:
+            - Path=/student/**
+        - id: marcasreloj-service
+          uri: lb://marcasreloj-service
+          predicates:
+            - Path=/marcasReloj/**
+        - id: pet-service
+          uri: lb://pet-service
+          predicates:
+            - Path=/pet/**
+        - id: justificativo-service
+          uri: lb://justificativo-service
+          predicates:
+            - Path=/justificativo/**
+        - id: empleado-service
+          uri: lb://empleado-service
+          predicates:
+            - Path=/empleado/**
+        - id: horasextras-service
+          uri: lb://horasextras-service
+          predicates:
+            - Path=/horasExtras/**
+        - id: planillasueldo-service
+          uri: lb://planillasueldo-service
+          predicates:
+            - Path=/calculoPlanillas/**
