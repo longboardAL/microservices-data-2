@@ -1,10 +1,21 @@
+spring:
+  application:
+    name: marcasreloj-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/bdmicros
+    username: root
+    password: Angelito2021
+jpa:
+  hibernate:
+    ddl-auto: update
 server:
-  port: 8285
+  port: 8004
+  forward-headers-strategy: framework
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
-    service-url:
-      default-zone: http://localhost:8761/eureka
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
